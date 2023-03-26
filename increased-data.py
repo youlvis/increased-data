@@ -30,19 +30,16 @@ def augment_image(image):
         adjusted_image = Image.fromarray(
             cv2.cvtColor(adjusted_image, cv2.COLOR_BGR2RGB))
 
-        # Espejo
-        if random.choice([True, False]):
-            mirrored_image = image.transpose(method=Image.FLIP_LEFT_RIGHT)
-        else:
-            mirrored_image = rotated_image.transpose(
-                method=Image.FLIP_LEFT_RIGHT)
-
         # Recorte
         crop_x1 = random.randint(0, int(width/4))
         crop_y1 = random.randint(0, int(height/4))
         crop_x2 = random.randint(int(width/2), width)
         crop_y2 = random.randint(int(height/2), height)
         cropped_image = image.crop((crop_x1, crop_y1, crop_x2, crop_y2))
+
+        # Espejo
+        mirrored_image = image.transpose(method=Image.FLIP_LEFT_RIGHT)
+        image = mirrored_image
 
         # Agregar cada imagen resultante a la lista de imágenes aumentadas
         augmented_images.extend(
