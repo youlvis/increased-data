@@ -4,7 +4,6 @@ import random
 import numpy as np
 import tkinter as tk
 from tkinter import filedialog
-import os
 
 
 def augment_image(image):
@@ -61,17 +60,9 @@ for file_path in file_paths:
     # Cargar la imagen original
     img = Image.open(file_path)
 
-    # Pedir al usuario la base del nombre de las imágenes resultantes
-    name_base = input(
-        "Introduce el nombre base para las imágenes aumentadas: ")
-
-    # Obtener la ruta y extensión de la imagen original
-    file_dir, file_name = os.path.split(file_path)
-    file_base, file_extension = os.path.splitext(file_name)
-
     # Aumentar la imagen y guardar todas las imágenes resultantes
     augmented_images = augment_image(img)
     for i, image in enumerate(augmented_images):
-        file_name = f'{name_base}_{i}{file_extension}'
-        file_path_out = os.path.join(file_dir, file_name)
-        image.save(file_path_out)
+        file_extension = file_path.split('.')[-1]
+        file_name = f'{file_path[:-len(file_extension)-1]}_augmentado_{i}.{file_extension}'
+        image.save(file_name)
